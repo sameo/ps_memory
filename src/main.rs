@@ -31,6 +31,9 @@ fn get_vmm_overhead(pid: u32, guest_memory_size: u32) -> HashMap<String, u32> {
             // dependent on the guest actual memory usage.
             // Everything else can be added to the VMM overhead.
             skip_map = map_size == guest_memory_size;
+            if skip_map {
+                println!("SKIP: {} has size {}", region_name, map_size);
+            }
             continue;
         }
 
