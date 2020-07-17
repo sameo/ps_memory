@@ -54,7 +54,10 @@ fn main() {
     );
     let mut total = 0;
 
-    for (region_name, value) in &regions {
+    let mut sorted_regions: Vec<(String, u32)> = regions.into_iter().collect();
+    sorted_regions.sort_by_key(|r| r.1);
+
+    for (region_name, value) in sorted_regions.iter() {
         println!("  {:<5}kB -- [{}]", value, region_name);
         total += value;
     }
