@@ -30,7 +30,7 @@ fn get_vmm_overhead(pid: u32, guest_memory_size: u32) -> HashMap<String, u32> {
             // We skip the assigned guest RAM map, its RSS is only
             // dependent on the guest actual memory usage.
             // Everything else can be added to the VMM overhead.
-            skip_map = map_size >= guest_memory_size;
+            skip_map = map_size == guest_memory_size;
             continue;
         }
 
