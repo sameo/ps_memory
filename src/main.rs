@@ -16,7 +16,13 @@ fn get_vmm_overhead(pid: u32, guest_memory_size: u32) -> HashMap<String, u32> {
 
         if l.contains("-") {
             let values: Vec<&str> = l.split_whitespace().collect();
-            region_name = values.last().unwrap().trim().to_string();
+            // Map name start from column 6
+            // 0                1    2        3     4                   5
+            // ffffff-fff601000 --xp 00000000 00:00 0                  [vsyscall]
+            let start_name_colum = 6;
+            if values.len() >= start_name_colum {
+                region_name  = values[start_name_colum-1..].into_iter().map(|s| s.to_string()).collect::<Vec<String>>().join(" ");
+            }
             if region_name == "0" {
                 region_name = "anonymous".to_string()
             }
